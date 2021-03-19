@@ -42,8 +42,8 @@ export default {
     };
   },
 
-  mounted() {
-    this.getTokenList();
+  async mounted() {
+    await this.getTokenList();
   },
   methods: {
     getTokenList() {
