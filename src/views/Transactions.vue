@@ -6,9 +6,9 @@
         <li>
           <!-- <p>{{ item.dateTime }}</p> -->
           <p>
-            <strong>{{ item.fromUser }}</strong> reconheceu
+            <strong>{{ item.fromUserName }}</strong> reconheceu
             {{ item.amount }} tokens E2C para
-            <strong>{{ item.toUser }}</strong> {{ item.description }}
+            <strong>{{ item.toUserName }}</strong> {{ item.description }}
           </p>
           <p>
             Desejo de acessar de {{ item.toUser }}:
@@ -20,6 +20,8 @@
   </div>
 </template>
 <script>
+//import { transactions } from '@/firebase'
+//import { mapState } from 'vuex'
 export default {
   name: "Transactions",
   data: function() {
@@ -27,13 +29,13 @@ export default {
       tokenList: []
     };
   },
+  
   mounted() {
     this.getTokenList();
   },
   methods: {
     getTokenList() {
-      let tokenList = JSON.parse(localStorage.getItem("TokensEmitidos"));
-      this.tokenList = tokenList;
+      this.tokenList = this.$store.state.transactions
     }
   }
 };

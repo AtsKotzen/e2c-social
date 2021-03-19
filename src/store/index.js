@@ -19,10 +19,24 @@ fb.postsCollection.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
   store.commit('setPosts', postsArray)
 })
 
+fb.transactions.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
+  let transactionsArray = []
+
+  snapshot.forEach(doc => {
+    let transaction = doc.data()
+    transaction.id = doc.id
+
+    transactionsArray.push(transaction)
+  })
+
+  store.commit('setTransactions', transactionsArray)
+})
+
 const store = new Vuex.Store({
   state: {
     userProfile: {},
-    posts: []
+    posts: [],
+    transactions: []
   },
   mutations: {
     setUserProfile(state, val) {
@@ -33,6 +47,9 @@ const store = new Vuex.Store({
     },
     setPosts(state, val) {
       state.posts = val
+    },
+    setTransactions(state, val) {
+      state.transactions = val
     }
   },
   actions: {
@@ -90,16 +107,25 @@ const store = new Vuex.Store({
       })
     },
     async saveTransactionDb({ state, commit }, payload) {
-      // create post in firebase
+      
       await fb.transactions.add({
         createdOn: new Date(),
-        fromUser: payload.fromUser,
-        toUser: payload.toUser,
+        fromUserName: payload.fromUser,
+        toUserName: payload.toUser,
         amount: payload.amount,
+        fromUid: fb.auth.currentUser.uid,
         description: payload.description,
         accessWish: payload.accessWish,
       })
       alert("Salvo com sucesso")
+    },
+    async getTransactionDb({ state, commit }, payload) {      
+      await fb.transactions.get();
+      const transactions = await fb.transactions.get()
+
+      // set user profile in state
+      commit('setTransactions', transactions.data())    
+           
     },
     async likePost ({ commit }, post) {
       const userId = fb.auth.currentUser.uid
