@@ -21,3 +21,5 @@ auth.onAuthStateChanged(user => {
     store.dispatch('fetchUserProfile', user)
   }
 })
+
+
