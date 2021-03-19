@@ -7,7 +7,19 @@
         </router-link>
         <ul class="inline">
           <li>
-            <router-link to="/">Dashboard</router-link>
+            <router-link to="/testify">Reconhecer</router-link>
+          </li>
+          <li>
+            <router-link to="/transactions">Tokens Emitidos</router-link>
+          </li>
+          <li>
+            <router-link to="/liquidate">Liquidar</router-link>
+          </li>
+          <li>
+            <router-link to="/wish-list">Desejo acessar</router-link>
+          </li>
+          <li>
+            <router-link to="/">Postagens</router-link>
           </li>
           <li>
             <router-link to="/settings">Configurações</router-link>

@@ -26,7 +26,24 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/testify',
+    name: 'testify',
+    component: () => import( /* webpackChunkName: "settings" */ '../views/Testify.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/transactions',
+    name: 'transactions',
+    component: () => import( /* webpackChunkName: "settings" */ '../views/Transactions.vue'),
+    meta: {
+      requiresAuth: true
+    }
   }
+  
 ]
 
 const router = new VueRouter({

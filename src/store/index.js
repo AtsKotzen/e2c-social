@@ -89,6 +89,18 @@ const store = new Vuex.Store({
         likes: 0
       })
     },
+    async saveTransactionDb({ state, commit }, payload) {
+      // create post in firebase
+      await fb.transactions.add({
+        createdOn: new Date(),
+        fromUser: payload.fromUser,
+        toUser: payload.toUser,
+        amount: payload.amount,
+        description: payload.description,
+        accessWish: payload.accessWish,
+      })
+      alert("Salvo com sucesso")
+    },
     async likePost ({ commit }, post) {
       const userId = fb.auth.currentUser.uid
       const docId = `${userId}_${post.id}`
