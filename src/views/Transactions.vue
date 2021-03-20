@@ -65,7 +65,7 @@ export default {
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 rgba(8, 50, 141, 0.6);
 }
 
 /* Add some padding inside the card container */

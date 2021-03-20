@@ -4,21 +4,20 @@
     <h1>Reconhecer Tokens E2C!!!</h1>
     <div id="create-e2c">
       <div>
-        <h5>Quem reconhece </h5>
-        <input
-          type="text"
-          placeholder="Nome de quem emite"
-          v-model="quemEmite"
-        />
+        <h5>Quem Reconhece</h5>
+        <label>{{ userProfile.name }}</label>
       </div>
       <br />
-      <div>
-        <label>Quem recebe </label>
-        <input
-          type="text"
-          placeholder="Nome de quem recebe"
-          v-model="quemRecebe"
-        />
+      <div>       
+        <label>Quem Recebe </label>
+        <select v-model="quemRecebe">
+          <option
+            v-for="(u, index) in users"
+            :key="index"
+            :label="u.name"
+            :value="u.name"
+          ></option>
+        </select>
       </div>
       <br />
       <div>
@@ -51,40 +50,47 @@
       </div>
       <br />
       <div>
-        <button class="button mb-10" @click="reconhecerTokens()">Reconhecer tokens E2C</button>
+        <button class="button mb-10" @click="reconhecerTokens()">
+          Reconhecer tokens E2C
+        </button>
       </div>
     </div>
   </div>
 </template>
 <script>
-
+import { mapState } from 'vuex'
 export default {
   name: "Testify",
   data: function() {
     return {
-      transactions: [],
-      quemEmite: "",
-      descricao: "",
+      transactions: [], 
+      descricao: "",      
       quemRecebe: "",
       amount: null,
-      desejoAcessar: ""
+      desejoAcessar: "",
     };
+  },
+  computed: {
+    ...mapState(['userProfile', 'posts']),
+    users: function() {
+      return this.$store.state.users;
+    },
   },
   methods: {
     reconhecerTokens() {
       let payload = {
         dateTime: new Date(),
-        fromUser: this.quemEmite,
-        toUser: this.quemRecebe,
+        fromUserName: this.userProfile.name,        
+        toUserName: this.quemRecebe,
         amount: this.amount,
         description: this.descricao,
-        accessWish: this.desejoAcessar
+        accessWish: this.desejoAcessar,
       };
       // let deal = this.transactions;
       // deal.push(payload);
       //localStorage.setItem("TokensEmitidos", JSON.stringify(deal));
-      this.$store.dispatch('saveTransactionDb', payload)
-    }
-  }
+      this.$store.dispatch("saveTransactionDb", payload);
+    },
+  },
 };
 </script>

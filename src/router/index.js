@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
-import DesejoAcessar from '../views/DesejoAcessar.vue'
 import { auth } from '../firebase'
 
 Vue.use(VueRouter)
@@ -48,6 +47,14 @@ const routes = [
     path: '/wish-list',
     name: 'wish-list',
     component: () => import( /* webpackChunkName: "settings" */ '../views/DesejoAcessar.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/liquidate',
+    name: 'liquidate',
+    component: () => import( /* webpackChunkName: "settings" */ '../views/Liquidar.vue'),
     meta: {
       requiresAuth: true
     }
