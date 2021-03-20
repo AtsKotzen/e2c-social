@@ -85,10 +85,7 @@ export default {
         amount: this.amount,
         description: this.descricao,
         accessWish: this.desejoAcessar,
-      };
-      // let deal = this.transactions;
-      // deal.push(payload);
-      //localStorage.setItem("TokensEmitidos", JSON.stringify(deal));
+      };      
       this.$store.dispatch("saveTransactionDb", payload);
     },
   },
