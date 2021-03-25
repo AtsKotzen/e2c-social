@@ -19,17 +19,17 @@ fb.postsCollection.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
   store.commit('setPosts', postsArray)
 })
 
-fb.balancesCollection.onSnapshot(snapshot => {
-  let balancesArray = []
+fb.tokensE2CCollection.onSnapshot(snapshot => {
+  let tokensArray = []
 
   snapshot.forEach(doc => {
-    let balance = doc.data()
-    balance.id = doc.id
+    let token = doc.data()
+    token.id = doc.id
 
-    balancesArray.push(balance)
+    tokensArray.push(token)
   })
 
-  store.commit('setBalances', balancesArray)
+  store.commit('setTokens', tokensArray)
 })
 
 fb.transactions.orderBy('createdAt', 'desc').onSnapshot(snapshot => {
@@ -64,7 +64,7 @@ const store = new Vuex.Store({
     posts: [],
     transactions: [],
     users: [],
-    balances: [],
+    tokens: [],
     desejosDeAcesso: []
   },
   mutations: {
@@ -83,8 +83,8 @@ const store = new Vuex.Store({
     setUsers(state, val) {
       state.users = val
     },
-    setBalances(state, val) {
-      state.balances = val
+    setTokens(state, val) {
+      state.tokens = val
     }
   },
   actions: {
@@ -148,15 +148,24 @@ const store = new Vuex.Store({
         fromUid: fb.auth.currentUser.uid,
         toUid: payload.toUid,
         description: payload.description,
-        type: "em",
-        completed: false
+        type: "em"
       })
-      // .then(await fb.balancesCollection.add({  
-      //   uid: payload.toUid,
-      //   amount: payload.amount     
-      // }))
+      .then(await fb.tokensE2CCollection.add({  
+        uid: payload.toUid,
+        amount: payload.amount     
+      }))
       
       alert("Salvo com sucesso")
+    },
+    async liquidateTokensDb({ state, commit }, payload) {      
+      await fb.transactions.add({
+        createdAt: new Date(),  
+        fromUid: fb.auth.currentUser.uid,
+        toUid: payload.toUid,
+        description: payload.description,
+        type: "liq"
+      })      
+      alert("Aviso de liquidação enviado")
     },
     async getTransactionDb({ commit }) {      
       await fb.transactions.get();

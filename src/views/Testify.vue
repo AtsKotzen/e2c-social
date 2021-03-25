@@ -37,7 +37,7 @@
         ></textarea>
       </div>
       <br />
-      <div>
+      <!-- <div>
         <label>A pessoa que recebe pode registrar o desejo de acessar</label>
         <br />
         <textarea
@@ -47,7 +47,7 @@
           cols="40"
           maxlength="500"
         ></textarea>
-      </div>
+      </div> -->
       <br />
       <div>
         <button class="button mb-10" @click="reconhecerTokens()">
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     reconhecerTokens() {
-      let payload = {          
+      let payload = {      
         toUid: this.quemRecebeUid,
         amount: this.amount,
         description: this.descricao

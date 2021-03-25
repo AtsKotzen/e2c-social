@@ -7,10 +7,10 @@
         </router-link>
         <ul class="inline">
           <li>
-            <router-link to="/testify">Reconhecer</router-link>
+            <router-link to="/testify">Emitir</router-link>
           </li>
           <li>
-            <router-link to="/transactions">Tokens Emitidos</router-link>
+            <router-link to="/transactions">Transações</router-link>
           </li>
           <li>
             <router-link to="/liquidate">Liquidar</router-link>

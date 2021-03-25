@@ -1,33 +1,55 @@
 <template>
   <section>
-    <div>
-      <h1>Tokens Emitidos</h1>
-      <div v-for="(item, index) in tokenList" :key="index">
-        <div class="card">
-          <div class="container">
-            <div class="card-header-tab card-header">
-              <p>
-                <strong>{{ item.fromUserName }}</strong>
-              </p>
-            </div>
-            <div class="token">
-              <p>{{ item.amount }}</p>
-              <p>
-                tokens E2C para<strong> {{ item.toUserName }}</strong>
-              </p>
-            </div>
-            <div>
-              <p>{{ item.description }}</p>
-            </div>
-            <div>
-              <p>
-                Desejo de acessar de {{ item.toUserName }}:
-                <strong>{{ item.accessWish }}</strong>
-              </p>
+    <div class="row">
+      
+      <div class="col-5">
+        <h1>Tokens Emitidos</h1>
+        <div v-for="(item, index) in tokenList" :key="index">
+          <div class="card" v-show="item.type === 'em'">
+            <div class="container">
+              <div class="card-header-tab card-header">
+                <p>
+                  <strong>{{ item.fromUid }}</strong>
+                </p>
+              </div>
+              <div class="token">
+                <p>{{ item.amount }}</p>
+                <p>
+                  tokens E2C para<strong> {{ item.toUid }}</strong>
+                </p>
+              </div>
+              <div>
+                <p>{{ item.description }}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      
+      <div class="col-5">
+        <h1>Tokens Liquidados</h1>
+        <div v-for="(item, index) in tokenList" :key="index">
+          <div class="card" v-show="item.type === 'liq'">
+            <div class="container">
+              <div class="card-header-tab card-header">
+                <p>
+                  <strong>{{ item.fromUid }}</strong>
+                </p>
+              </div>
+              <div class="token">
+                <p>{{ item.amount }}</p>
+                <p>
+                  tokens E2C para<strong> {{ item.toUid }}</strong>
+                </p>
+              </div>
+              <div>
+                <p>{{ item.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 </template>
@@ -41,7 +63,6 @@ export default {
       tokenList: [],
     };
   },
-
   async mounted() {
     await this.getTokenList();
   },

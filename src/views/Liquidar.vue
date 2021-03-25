@@ -8,6 +8,7 @@
         <label>{{ userProfile.name }}</label>
       </div>
       <br />
+     
       <div>       
         <label>Liquidar para </label>
         <select v-model="descontarDeUid">
@@ -19,11 +20,7 @@
           ></option>
         </select>
       </div>
-      <br />
-      <div>
-        <label>Quantidade </label>
-        <input type="number" v-model="amount" placeholder="Quantidade" />
-      </div>
+      <br />      
       <br />
       <div>
         <label>Descrição</label>
@@ -50,7 +47,7 @@
       </div>
       <br />
       <div>
-        <button class="button mb-10" @click="LiquidarTokens()">
+        <button class="button mb-10" @click="liquidarTokens()">
           Liquidar tokens E2C
         </button>
       </div>
@@ -65,8 +62,7 @@ export default {
     return {    
       quemLiquida: "",
       descricao: "",
-      descontarDeUid: "",
-      amount: null,
+      descontarDeUid: "",     
       desejoSelecionado: "",      
     };
   },
@@ -77,6 +73,9 @@ export default {
     users: function() {
       return this.$store.state.users;
     },
+    tokens: function() {
+      return this.$store.state.tokens;
+    },    
     desejosDeAcesso: function() {
       return this.$store.state.transactions
     },
@@ -84,16 +83,11 @@ export default {
   },
   methods: {
     liquidarTokens() {
-      let payload = {
-        dateTime: new Date(),
-        fromUserName: this.quemLiquida,
-        toUser: this.descontarDeUid,
-        amount: this.amount,
-        description: this.descricao,
-        accessWish: this.desejosAcesso,
+      let payload = {         
+        toUid: this.descontarDeUid,
+        description: this.descricao
       };
-      //this.$store.dispatch("liquidateTransactionDb", payload);
-      console.log("Liquidar Tokens Payload: ", payload)
+      this.$store.dispatch("liquidateTokensDb", payload);  
     },
   },
 };
