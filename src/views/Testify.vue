@@ -22,7 +22,7 @@
       <br />
       <div>
         <label>Quantidade </label>
-        <input type="number" v-model="amount" placeholder="Quantidade" />
+        <input type="number" v-model.number="amount" placeholder="Quantidade" />
       </div>
       <br />
       <div>

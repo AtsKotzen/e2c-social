@@ -2,8 +2,7 @@
   <section id="settings">
     <div class="col1">
       <h3>Configurações</h3>
-      <p>Atualizar perfil</p>
-
+      <p>Atualizar perfil</p>      
       <transition name="fade">
         <p v-if="showSuccess" class="success">Perfil Atualizado!</p>
       </transition>
@@ -22,6 +21,7 @@
 </template>
 
 <script>
+
 import { mapState } from 'vuex'
 
 export default {

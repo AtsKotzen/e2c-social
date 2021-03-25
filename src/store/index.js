@@ -1,62 +1,62 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import * as fb from '../firebase'
-import router from '../router/index'
+import Vue from "vue";
+import Vuex from "vuex";
+import * as fb from "../firebase";
+import router from "../router/index";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 // realtime firebase
-fb.postsCollection.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
-  let postsArray = []
+fb.postsCollection.orderBy("createdOn", "desc").onSnapshot((snapshot) => {
+  let postsArray = [];
 
-  snapshot.forEach(doc => {
-    let post = doc.data()
-    post.id = doc.id
+  snapshot.forEach((doc) => {
+    let post = doc.data();
+    post.id = doc.id;
 
-    postsArray.push(post)
-  })
+    postsArray.push(post);
+  });
 
-  store.commit('setPosts', postsArray)
-})
+  store.commit("setPosts", postsArray);
+});
 
-fb.tokensE2CCollection.onSnapshot(snapshot => {
-  let tokensArray = []
+fb.tokensE2CCollection.onSnapshot((snapshot) => {
+  let tokensArray = [];
 
-  snapshot.forEach(doc => {
-    let token = doc.data()
-    token.id = doc.id
+  snapshot.forEach((doc) => {
+    let token = doc.data();
+    token.id = doc.id;
 
-    tokensArray.push(token)
-  })
+    tokensArray.push(token);
+  });
 
-  store.commit('setTokens', tokensArray)
-})
+  store.commit("setTokens", tokensArray);
+});
 
-fb.transactions.orderBy('createdAt', 'desc').onSnapshot(snapshot => {
-  let transactionsArray = []
+fb.transactions.orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+  let transactionsArray = [];
 
-  snapshot.forEach(doc => {
-    let transaction = doc.data()
-    transaction.id = doc.id
+  snapshot.forEach((doc) => {
+    let transaction = doc.data();
+    transaction.id = doc.id;
 
-    transactionsArray.push(transaction)
-  })
+    transactionsArray.push(transaction);
+  });
 
-  store.commit('setTransactions', transactionsArray)
-})
+  store.commit("setTransactions", transactionsArray);
+});
 
-fb.usersCollection.orderBy('name', 'desc').onSnapshot(snapshot => {
-  let usersArray = []
+fb.usersCollection.orderBy("name", "desc").onSnapshot((snapshot) => {
+  let usersArray = [];
 
-  snapshot.forEach(doc => {
-    let user = doc.data()
-    user.id = doc.id
+  snapshot.forEach((doc) => {
+    let user = doc.data();
+    user.id = doc.id;
 
-    usersArray.push(user)
-  })
+    usersArray.push(user);
+  });
 
-  store.commit('setUsers', usersArray)
-})
+  store.commit("setUsers", usersArray);
+});
 
 const store = new Vuex.Store({
   state: {
@@ -65,70 +65,80 @@ const store = new Vuex.Store({
     transactions: [],
     users: [],
     tokens: [],
-    desejosDeAcesso: []
+    myTokens: [],
+    desejosDeAcesso: [],
   },
   mutations: {
     setUserProfile(state, val) {
-      state.userProfile = val
+      state.userProfile = val;
     },
     setPerformingRequest(state, val) {
-      state.performingRequest = val
+      state.performingRequest = val;
     },
     setPosts(state, val) {
-      state.posts = val
+      state.posts = val;
     },
     setTransactions(state, val) {
-      state.transactions = val
+      state.transactions = val;
     },
     setUsers(state, val) {
-      state.users = val
+      state.users = val;
     },
     setTokens(state, val) {
-      state.tokens = val
-    }
+      state.tokens = val;
+    },
+    setMyTokens(state, val) {
+      state.myTokens = val;
+    },
   },
   actions: {
     async login({ dispatch }, form) {
       // sign user in
-      const { user } = await fb.auth.signInWithEmailAndPassword(form.email, form.password)
+      const { user } = await fb.auth.signInWithEmailAndPassword(
+        form.email,
+        form.password
+      );
 
       // fetch user profile and set in state
-      dispatch('fetchUserProfile', user)
+      dispatch("fetchUserProfile", user);
     },
     async signup({ dispatch }, form) {
       // sign user up
-      const { user } = await fb.auth.createUserWithEmailAndPassword(form.email, form.password)
+      const { user } = await fb.auth.createUserWithEmailAndPassword(
+        form.email,
+        form.password
+      );
 
       // create user object in userCollections
       await fb.usersCollection.doc(user.uid).set({
         name: form.name,
-        title: form.title
-      })
+        title: form.title,
+      });
 
       // fetch user profile and set in state
-      dispatch('fetchUserProfile', user)
+      dispatch("fetchUserProfile", user);
     },
     async fetchUserProfile({ commit }, user) {
       // fetch user profile
-      const userProfile = await fb.usersCollection.doc(user.uid).get()
+      const userProfile = await fb.usersCollection.doc(user.uid).get();
 
       // set user profile in state
-      commit('setUserProfile', userProfile.data())
+      commit("setUserProfile", userProfile.data());
 
       // change route to dashboard
-      if (router.currentRoute.path === '/login') {
-        router.push('/')
+      if (router.currentRoute.path === "/login") {
+        router.push("/");
       }
     },
     async logout({ commit }) {
       // log user out
-      await fb.auth.signOut()
+      await fb.auth.signOut();
 
       // clear user data from state
-      commit('setUserProfile', {})
+      commit("setUserProfile", {});
 
       // redirect to login view
-      router.push('/login')
+      router.push("/login");
     },
     async createPost({ state, commit }, post) {
       // create post in firebase
@@ -138,95 +148,123 @@ const store = new Vuex.Store({
         userId: fb.auth.currentUser.uid,
         userName: state.userProfile.name,
         comments: 0,
-        likes: 0
-      })
+        likes: 0,
+      });
     },
-    async emmitTokensDb({ state, commit }, payload) {      
+    async emmitTokensDb({ state, commit }, payload) {
+      await fb.transactions
+        .add({
+          createdAt: new Date(),
+          amount: payload.amount,
+          fromUid: fb.auth.currentUser.uid,
+          toUid: payload.toUid,
+          description: payload.description,
+          type: "em",
+        })
+        .then(
+          await fb.tokensE2CCollection.add({
+            uid: payload.toUid,
+            amount: payload.amount,
+          })
+        );
+
+      alert("Salvo com sucesso");
+    },
+    async liquidateTokensDb({ state, commit }, payload) {
       await fb.transactions.add({
-        createdAt: new Date(),  
-        amount: payload.amount,
+        createdAt: new Date(),
         fromUid: fb.auth.currentUser.uid,
         toUid: payload.toUid,
         description: payload.description,
-        type: "em"
-      })
-      .then(await fb.tokensE2CCollection.add({  
-        uid: payload.toUid,
-        amount: payload.amount     
-      }))
-      
-      alert("Salvo com sucesso")
+        type: "liq",
+      });
+      alert("Aviso de liquidação enviado");
     },
-    async liquidateTokensDb({ state, commit }, payload) {      
-      await fb.transactions.add({
-        createdAt: new Date(),  
-        fromUid: fb.auth.currentUser.uid,
-        toUid: payload.toUid,
-        description: payload.description,
-        type: "liq"
-      })      
-      alert("Aviso de liquidação enviado")
-    },
-    async getTransactionDb({ commit }) {      
+    async getTransactionDb({ commit }) {
       await fb.transactions.get();
-      const transactions = await fb.transactions.get()
+      const transactions = await fb.transactions.get();
 
       // set user profile in state
-      commit('setTransactions', transactions.data())    
-           
+      commit("setTransactions", transactions.data());
     },
-    async fetchUsers({ commit }) {        
+    async fetchUsers({ commit }) {
       await fb.usersCollection.get();
-      const users = await fb.usersCollection.get() 
+      const users = await fb.usersCollection.get();
       // set users in state
-      commit('setUsers', users.data())     
+      commit("setUsers", users.data());
     },
-    async likePost ({ commit }, post) {
-      const userId = fb.auth.currentUser.uid
-      const docId = `${userId}_${post.id}`
+    async likePost({ commit }, post) {
+      const userId = fb.auth.currentUser.uid;
+      const docId = `${userId}_${post.id}`;
 
       // check if user has liked post
-      const doc = await fb.likesCollection.doc(docId).get()
-      if (doc.exists) { return }
+      const doc = await fb.likesCollection.doc(docId).get();
+      if (doc.exists) {
+        return;
+      }
 
       // create post
       await fb.likesCollection.doc(docId).set({
         postId: post.id,
-        userId: userId
-      })
+        userId: userId,
+      });
 
       // update post likes count
       fb.postsCollection.doc(post.id).update({
-        likes: post.likesCount + 1
-      })
+        likes: post.likesCount + 1,
+      });
     },
     async updateProfile({ dispatch }, user) {
-      const userId = fb.auth.currentUser.uid
+      const userId = fb.auth.currentUser.uid;
       // update user object
       const userRef = await fb.usersCollection.doc(userId).update({
         name: user.name,
-        title: user.title
-      })
+        title: user.title,
+      });
 
-      dispatch('fetchUserProfile', { uid: userId })
+      dispatch("fetchUserProfile", { uid: userId });
 
       // update all posts by user
-      const postDocs = await fb.postsCollection.where('userId', '==', userId).get()
-      postDocs.forEach(doc => {
+      const postDocs = await fb.postsCollection
+        .where("userId", "==", userId)
+        .get();
+      postDocs.forEach((doc) => {
         fb.postsCollection.doc(doc.id).update({
-          userName: user.name
-        })
-      })
+          userName: user.name,
+        });
+      });
 
       // update all comments by user
-      const commentDocs = await fb.commentsCollection.where('userId', '==', userId).get()
-      commentDocs.forEach(doc => {
+      const commentDocs = await fb.commentsCollection
+        .where("userId", "==", userId)
+        .get();
+      commentDocs.forEach((doc) => {
         fb.commentsCollection.doc(doc.id).update({
-          userName: user.name
+          userName: user.name,
+        });
+      });
+    },
+    getMyTokens({ commit }) {
+      const userId = fb.auth.currentUser.uid;
+      const myTokens = [];
+      fb.tokensE2CCollection
+        .where("uid", "==", userId)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            myTokens.push({
+              TokenId: doc.id,
+              uid: doc.data().uid,
+              amount: doc.data().amount,
+            });
+          });
+          commit("setMyTokens", myTokens);
         })
-      })
-    }
-  }
-})
+        .catch((error) => {
+          console.error("Erro buscando meus tokens: ", error);
+        });      
+    },
+  },
+});
 
-export default store
+export default store;

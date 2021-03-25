@@ -1,35 +1,10 @@
 <template>
   <section>
     <div class="row">
-      
       <div class="col-5">
-        <h1>Tokens Emitidos</h1>
+        <h1>Todas as Emissões</h1>
         <div v-for="(item, index) in tokenList" :key="index">
-          <div class="card" v-show="item.type === 'em'">
-            <div class="container">
-              <div class="card-header-tab card-header">
-                <p>
-                  <strong>{{ item.fromUid }}</strong>
-                </p>
-              </div>
-              <div class="token">
-                <p>{{ item.amount }}</p>
-                <p>
-                  tokens E2C para<strong> {{ item.toUid }}</strong>
-                </p>
-              </div>
-              <div>
-                <p>{{ item.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-5">
-        <h1>Tokens Liquidados</h1>
-        <div v-for="(item, index) in tokenList" :key="index">
-          <div class="card" v-show="item.type === 'liq'">
+          <div class="card" v-if="item.type === 'em'">
             <div class="container">
               <div class="card-header-tab card-header">
                 <p>
@@ -50,25 +25,67 @@
         </div>
       </div>
 
+      <div class="col-5">
+        <h1>Todas as liquidações</h1>
+        <div v-for="(item, index) in tokenList" :key="index">
+          <div class="card" v-if="item.type === 'liq'">
+            <div class="container">
+              <div class="card-header-tab card-header">
+                <p>
+                  <strong>{{ item.fromUid }}</strong>
+                </p>
+              </div>
+              <div class="token">
+                <p>{{ item.amount }}</p>
+                <p>
+                  tokens E2C para<strong> {{ item.toUid }}</strong>
+                </p>
+              </div>
+              <div>
+                <p>{{ item.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Tokens emitidos para mim</h1>
+      <div v-for="(m, index) in myTokens" :key="index">
+        <div class="card">
+          <div>
+            <p>TokenId: {{ m.TokenId }}</p>
+            <p>Quantidade: {{ m.amount }}</p>
+          </div>
+        </div>
+        <p>Total: {{ totalTokens }}</p>
+      </div>
     </div>
   </section>
 </template>
 <script>
-//import { transactions } from '@/firebase'
-//import { mapState } from 'vuex'
 export default {
   name: "Transactions",
   data: function() {
     return {
-      tokenList: [],
+      totalTokens: 0,
     };
   },
   async mounted() {
-    await this.getTokenList();
+    await this.$store.dispatch("getMyTokens");
   },
-  methods: {
-    getTokenList() {
-      this.tokenList = this.$store.state.transactions;
+  computed: {
+    tokenList: function() {
+      return this.$store.state.transactions;
+    },
+    myTokens: function() {
+      return this.$store.state.myTokens;
+    },
+    myTotalTokens: function() {
+      return this.$store.state.myTokens.forEach((el) => {        
+        this.totalTokens = el.amount
+      });
+      
     },
   },
 };

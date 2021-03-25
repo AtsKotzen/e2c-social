@@ -18,8 +18,8 @@
           <li>
             <router-link to="/wish-list">Desejo acessar</router-link>
           </li>
-          <li>
-            <router-link to="/">Postagens</router-link>
+          <li class="danger">
+            <router-link to="/">Reportar Bugs</router-link>
           </li>
           <li>
             <router-link to="/settings">Configurações</router-link>
@@ -40,3 +40,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.danger{
+  text-decoration-color: red;
+}
+</style>
