@@ -1,7 +1,7 @@
 <template>
   <div align="center">
     <br />
-    <h1>Reconhecer Tokens E2C!!!</h1>
+    <h1>Emitir Tokens E2C!!!</h1>
     <div id="create-e2c">
       <div>
         <h5>Quem Reconhece</h5>
@@ -10,12 +10,12 @@
       <br />
       <div>       
         <label>Quem Recebe </label>
-        <select v-model="quemRecebe">
+        <select v-model="quemRecebeUid">
           <option
             v-for="(u, index) in users"
             :key="index"
             :label="u.name"
-            :value="u.name"
+            :value="u.id"
           ></option>
         </select>
       </div>
@@ -51,7 +51,7 @@
       <br />
       <div>
         <button class="button mb-10" @click="reconhecerTokens()">
-          Reconhecer tokens E2C
+          Emitir tokens E2C
         </button>
       </div>
     </div>
@@ -65,7 +65,8 @@ export default {
     return {
       transactions: [], 
       descricao: "",      
-      quemRecebe: "",
+      quemRecebeUid: "",
+      quemRecebeNome: "",
       amount: null,
       desejoAcessar: "",
     };
@@ -78,15 +79,12 @@ export default {
   },
   methods: {
     reconhecerTokens() {
-      let payload = {
-        dateTime: new Date(),
-        fromUserName: this.userProfile.name,        
-        toUserName: this.quemRecebe,
+      let payload = {          
+        toUid: this.quemRecebeUid,
         amount: this.amount,
-        description: this.descricao,
-        accessWish: this.desejoAcessar,
+        description: this.descricao
       };      
-      this.$store.dispatch("saveTransactionDb", payload);
+      this.$store.dispatch("emmitTokensDb", payload);
     },
   },
 };

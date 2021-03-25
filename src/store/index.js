@@ -19,7 +19,20 @@ fb.postsCollection.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
   store.commit('setPosts', postsArray)
 })
 
-fb.transactions.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
+fb.balancesCollection.onSnapshot(snapshot => {
+  let balancesArray = []
+
+  snapshot.forEach(doc => {
+    let balance = doc.data()
+    balance.id = doc.id
+
+    balancesArray.push(balance)
+  })
+
+  store.commit('setBalances', balancesArray)
+})
+
+fb.transactions.orderBy('createdAt', 'desc').onSnapshot(snapshot => {
   let transactionsArray = []
 
   snapshot.forEach(doc => {
@@ -51,6 +64,7 @@ const store = new Vuex.Store({
     posts: [],
     transactions: [],
     users: [],
+    balances: [],
     desejosDeAcesso: []
   },
   mutations: {
@@ -68,6 +82,9 @@ const store = new Vuex.Store({
     },
     setUsers(state, val) {
       state.users = val
+    },
+    setBalances(state, val) {
+      state.balances = val
     }
   },
   actions: {
@@ -124,17 +141,21 @@ const store = new Vuex.Store({
         likes: 0
       })
     },
-    async saveTransactionDb({ state, commit }, payload) {
-      
+    async emmitTokensDb({ state, commit }, payload) {      
       await fb.transactions.add({
-        createdOn: new Date(),
-        fromUserName:  state.userProfile.name,
-        toUserName: payload.toUserName,
+        createdAt: new Date(),  
         amount: payload.amount,
         fromUid: fb.auth.currentUser.uid,
+        toUid: payload.toUid,
         description: payload.description,
-        accessWish: payload.accessWish,
+        type: "em",
+        completed: false
       })
+      // .then(await fb.balancesCollection.add({  
+      //   uid: payload.toUid,
+      //   amount: payload.amount     
+      // }))
+      
       alert("Salvo com sucesso")
     },
     async getTransactionDb({ commit }) {      
@@ -149,8 +170,7 @@ const store = new Vuex.Store({
       await fb.usersCollection.get();
       const users = await fb.usersCollection.get() 
       // set users in state
-      commit('setUsers', users.data())
-      console.log(users);    
+      commit('setUsers', users.data())     
     },
     async likePost ({ commit }, post) {
       const userId = fb.auth.currentUser.uid
