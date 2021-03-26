@@ -37,17 +37,18 @@
             <p>{{ post.content | trimLength }}</p>
             <ul>
               <li>
-                <a @click="toggleCommentModal(post)"
-                  >comentários {{ post.comments }}</a
-                >
+                <p>comentários: {{ post.comments }}</p>
               </li>
               <li>
                 <a @click="likePost(post.id, post.likes)"
-                  >curtidas {{ post.likes }}</a
+                  >curtir {{ post.likes }}</a
                 >
               </li>
-              <li><a @click="viewPost(post)">ver detalhes</a></li>
+              <li><a @click="viewPost(post)">ver mais...</a></li>
             </ul>
+                <a @click="toggleCommentModal(post)"
+                  >Adicionar comentário</a
+                >
           </div>
         </div>
         <div v-else>

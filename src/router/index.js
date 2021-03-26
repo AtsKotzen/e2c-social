@@ -30,7 +30,7 @@ const routes = [
   {
     path: '/master',
     name: 'master',
-    component: () => import( /* webpackChunkName: "settings" */ '../views/Master.vue'),
+    component: () => import( /* webpackChunkName: "settings" */ '../views/MenuApp.vue'),
     meta: {
       requiresAuth: true
     }

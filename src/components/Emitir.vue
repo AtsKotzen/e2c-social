@@ -4,8 +4,10 @@
     <h1>Emitir Tokens E2C!!!</h1>
     <div id="create-e2c">
       <div>
-        <h5>Quem Reconhece</h5>
-        <label>{{ userProfile.name }}</label>
+        <md-avatar class="md-avatar-icon md-primary">
+          <md-icon></md-icon>
+        </md-avatar>
+        <label class="md-title">{{ userProfile.name }}</label>
       </div>
       <br />
       <div>       
