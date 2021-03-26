@@ -26,7 +26,7 @@
       </div>
 
       <div class="col-5">
-        <h1>Todas as liquidações</h1>
+        <h1>Intenções de liquidação</h1>
         <div v-for="(item, index) in tokenList" :key="index">
           <div class="card" v-if="item.type === 'liq'">
             <div class="container">
@@ -58,7 +58,7 @@
             <p>Quantidade: {{ m.amount }}</p>
           </div>
         </div>
-        <p>Total: {{ totalTokens }}</p>
+        <p>Total: {{ myTotalTokens }}</p>
       </div>
     </div>
   </section>
@@ -83,7 +83,7 @@ export default {
     },
     myTotalTokens: function() {
       return this.$store.state.myTokens.forEach((el) => {        
-        this.totalTokens = el.amount
+        return el.amount;
       });
       
     },
