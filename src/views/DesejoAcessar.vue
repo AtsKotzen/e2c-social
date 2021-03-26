@@ -18,8 +18,7 @@
   </section>
 </template>
 <script>
-//import { transactions } from '@/firebase'
-//import { mapState } from 'vuex'
+
 export default {
   name: "DesejoAcessar",
   computed: {

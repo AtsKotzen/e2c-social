@@ -60,7 +60,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  name: "Testify",
+  name: "Emitir",
   data: function() {
     return {
       transactions: [], 

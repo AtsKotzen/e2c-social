@@ -1,6 +1,9 @@
 <template>
   <section>
     <div class="row">
+      <Emitir />
+      <MyTokens />
+      <Liquidar />
       <div class="col-5">
         <h1>Todas as Emissões</h1>
         <div v-for="(item, index) in tokenList" :key="index">
@@ -49,23 +52,16 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <h1>Tokens emitidos para mim</h1>
-      <div v-for="(m, index) in myTokens" :key="index">
-        <div class="card">
-          <div>
-            <p>TokenId: {{ m.TokenId }}</p>
-            <p>Quantidade: {{ m.amount }}</p>
-          </div>
-        </div>
-        <p>Total: {{ myTotalTokens }}</p>
-      </div>
-    </div>
+    
   </section>
 </template>
 <script>
+import Emitir from "../components/Emitir";
+import Liquidar from "../components/Liquidar";
+import MyTokens from "../components/MyTokens";
 export default {
   name: "Transactions",
+  components: { Emitir, MyTokens, Liquidar },
   data: function() {
     return {
       totalTokens: 0,
@@ -77,16 +73,7 @@ export default {
   computed: {
     tokenList: function() {
       return this.$store.state.transactions;
-    },
-    myTokens: function() {
-      return this.$store.state.myTokens;
-    },
-    myTotalTokens: function() {
-      return this.$store.state.myTokens.forEach((el) => {        
-        return el.amount;
-      });
-      
-    },
+    }
   },
 };
 </script>

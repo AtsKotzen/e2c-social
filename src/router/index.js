@@ -28,9 +28,9 @@ const routes = [
     }
   },
   {
-    path: '/testify',
-    name: 'testify',
-    component: () => import( /* webpackChunkName: "settings" */ '../views/Testify.vue'),
+    path: '/master',
+    name: 'master',
+    component: () => import( /* webpackChunkName: "settings" */ '../views/Master.vue'),
     meta: {
       requiresAuth: true
     }
@@ -50,15 +50,15 @@ const routes = [
     meta: {
       requiresAuth: true
     }
-  },
-  {
-    path: '/liquidate',
-    name: 'liquidate',
-    component: () => import( /* webpackChunkName: "settings" */ '../views/Liquidar.vue'),
-    meta: {
-      requiresAuth: true
-    }
   }
+  // {
+  //   path: '/liquidate',
+  //   name: 'liquidate',
+  //   component: () => import( /* webpackChunkName: "settings" */ '../views/Liquidar.vue'),
+  //   meta: {
+  //     requiresAuth: true
+  //   }
+  // }
   
 ]
 

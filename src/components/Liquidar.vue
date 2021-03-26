@@ -34,7 +34,7 @@
         ></textarea>
       </div>
       <br />
-      <div>       
+      <!-- <div>       
         <label>Liquidar por algum "Desejo de Acesso" registrado </label>
         <select v-model="desejoSelecionado">
           <option
@@ -44,7 +44,7 @@
             :value="t.id"
           ></option>
         </select>
-      </div>
+      </div> -->
       <br />
       <div>
         <button class="button mb-10" @click="liquidarTokens()">

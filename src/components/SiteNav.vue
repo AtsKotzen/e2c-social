@@ -7,7 +7,7 @@
         </router-link>
         <ul class="inline">
           <li>
-            <router-link to="/testify">Emitir</router-link>
+            <router-link to="/master">Master</router-link>
           </li>
           <li>
             <router-link to="/transactions">Transações</router-link>
