@@ -1,69 +1,20 @@
 <template>
   <section>
     <div class="row">
-      <Emitir />
-      <br />
-      <br />
-      <MyTokens />
+      <Emitir />      
+     
       <Liquidar />
-      <div class="col-5">
-        <h1>Todas as Emissões</h1>
-        <div v-for="(item, index) in tokenList" :key="index">
-          <div class="card" v-if="item.type === 'em'">
-            <div class="container">
-              <div class="card-header-tab card-header">
-                <p>
-                  <strong>{{ item.fromUid }}</strong>
-                </p>
-              </div>
-              <div class="token">
-                <p>{{ item.amount }}</p>
-                <p>
-                  tokens E2C para<strong> {{ item.toUid }}</strong>
-                </p>
-              </div>
-              <div>
-                <p>{{ item.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-5">
-        <h1>Intenções de liquidação</h1>
-        <div v-for="(item, index) in tokenList" :key="index">
-          <div class="card" v-if="item.type === 'liq'">
-            <div class="container">
-              <div class="card-header-tab card-header">
-                <p>
-                  <strong>{{ item.fromUid }}</strong>
-                </p>
-              </div>
-              <div class="token">
-                <p>{{ item.amount }}</p>
-                <p>
-                  tokens E2C para<strong> {{ item.toUid }}</strong>
-                </p>
-              </div>
-              <div>
-                <p>{{ item.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </div>     
     
   </section>
 </template>
 <script>
 import Emitir from "../components/Emitir";
 import Liquidar from "../components/Liquidar";
-import MyTokens from "../components/MyTokens";
+
 export default {
   name: "Transactions",
-  components: { Emitir, MyTokens, Liquidar },
+  components: { Emitir, Liquidar },
   data: function() {
     return {
       totalTokens: 0,

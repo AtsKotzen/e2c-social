@@ -12,12 +12,12 @@
       <br />
       <div>       
         <label>Quem Recebe </label>
-        <select v-model="quemRecebeUid">
+        <select v-model="quemRecebe">
           <option
             v-for="(u, index) in users"
             :key="index"
             :label="u.name"
-            :value="u.id"
+            :value="u"
           ></option>
         </select>
       </div>
@@ -39,7 +39,7 @@
         ></textarea>
       </div>
       <br />
-      <!-- <div>
+      <div>
         <label>A pessoa que recebe pode registrar o desejo de acessar</label>
         <br />
         <textarea
@@ -49,10 +49,10 @@
           cols="40"
           maxlength="500"
         ></textarea>
-      </div> -->
+      </div>
       <br />
       <div>
-        <button class="button mb-10" @click="reconhecerTokens()">
+        <button class="button mb-10" @click="emitirTokens()">
           Emitir tokens E2C
         </button>
       </div>
@@ -67,8 +67,7 @@ export default {
     return {
       transactions: [], 
       descricao: "",      
-      quemRecebeUid: "",
-      quemRecebeNome: "",
+      quemRecebe: null,  
       amount: null,
       desejoAcessar: "",
     };
@@ -80,13 +79,15 @@ export default {
     },
   },
   methods: {
-    reconhecerTokens() {
+    emitirTokens() {      
       let payload = {      
-        toUid: this.quemRecebeUid,
+        toUid: this.quemRecebe.id,
+        toName: this.quemRecebe.name,  
         amount: this.amount,
-        description: this.descricao
+        description: this.descricao,
+        accessWish: this.desejoAcessar
       };      
-      this.$store.dispatch("emmitTokensDb", payload);
+      this.$store.dispatch("emmitTokensAndTransactionDb", payload);  
     },
   },
 };

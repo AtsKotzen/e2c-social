@@ -11,12 +11,12 @@
      
       <div>       
         <label>Liquidar para </label>
-        <select v-model="descontarDeUid">
+        <select v-model="liquidarPara">
           <option
             v-for="(u, index) in users"
             :key="index"
             :label="u.name"
-            :value="u.id"
+            :value="u"
           ></option>
         </select>
       </div>
@@ -59,10 +59,9 @@ import { mapState } from 'vuex'
 export default {
   name: "liquidate",
   data: function() {
-    return {    
-      quemLiquida: "",
+    return {  
       descricao: "",
-      descontarDeUid: "",     
+      liquidarPara: null,     
       desejoSelecionado: "",      
     };
   },
@@ -84,10 +83,11 @@ export default {
   methods: {
     liquidarTokens() {
       let payload = {         
-        toUid: this.descontarDeUid,
+        toUid: this.liquidarPara.id,
+        toName: this.liquidarPara.name,
         description: this.descricao
       };
-      this.$store.dispatch("liquidateTokensDb", payload);  
+      this.$store.dispatch("setLiquidateIntentionDb", payload);  
     },
   },
 };

@@ -5,16 +5,10 @@
         <router-link to="/">
           <h3>E2C</h3>
         </router-link>
-        <ul class="inline">
+        <ul class="inline">          
           <li>
-            <router-link to="/master">Master</router-link>
-          </li>
-          <li>
-            <router-link to="/transactions">Transações</router-link>
-          </li>
-          <li>
-            <router-link to="/liquidate">Liquidar</router-link>
-          </li>
+            <router-link to="/transactions">Painel</router-link>
+          </li>          
           <li>
             <router-link to="/wish-list">Desejo acessar</router-link>
           </li>

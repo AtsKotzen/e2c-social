@@ -26,15 +26,7 @@ const routes = [
     meta: {
       requiresAuth: true
     }
-  },
-  {
-    path: '/master',
-    name: 'master',
-    component: () => import( /* webpackChunkName: "settings" */ '../views/MenuApp.vue'),
-    meta: {
-      requiresAuth: true
-    }
-  },
+  },  
   {
     path: '/transactions',
     name: 'transactions',
@@ -50,16 +42,7 @@ const routes = [
     meta: {
       requiresAuth: true
     }
-  }
-  // {
-  //   path: '/liquidate',
-  //   name: 'liquidate',
-  //   component: () => import( /* webpackChunkName: "settings" */ '../views/Liquidar.vue'),
-  //   meta: {
-  //     requiresAuth: true
-  //   }
-  // }
-  
+  } 
 ]
 
 const router = new VueRouter({

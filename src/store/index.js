@@ -151,34 +151,45 @@ const store = new Vuex.Store({
         likes: 0,
       });
     },
-    async emmitTokensDb({ state, commit }, payload) {
+    async emmitTokensAndTransactionDb({ state, commit }, payload) {
       await fb.transactions
         .add({
           createdAt: new Date(),
           amount: payload.amount,
           fromUid: fb.auth.currentUser.uid,
           toUid: payload.toUid,
+          fromName: state.userProfile.name,
+          toName: payload.toName,
           description: payload.description,
-          type: "em",
+          accessWish: payload.accessWish,
+          type: "emissão",
         })
         .then(
           await fb.tokensE2CCollection.add({
-            uid: payload.toUid,
+            createdAt: new Date(),
             amount: payload.amount,
+            fromUid: fb.auth.currentUser.uid,
+            fromName: state.userProfile.name,
+            uid: payload.toUid,
+            ownerName: payload.toName,
+            description: payload.description,  
+            liquidated: false
           })
         );
 
       alert("Salvo com sucesso");
     },
-    async liquidateTokensDb({ state, commit }, payload) {
+    async setLiquidateIntentionDb({ state, commit }, payload) {
       await fb.transactions.add({
         createdAt: new Date(),
         fromUid: fb.auth.currentUser.uid,
         toUid: payload.toUid,
+        fromName: state.userProfile.name,
+        toName: payload.toName,
         description: payload.description,
-        type: "liq",
+        type: "intenção-liquidação",
       });
-      alert("Aviso de liquidação enviado");
+      alert("Um aviso de Intenção de Liquidação será enviado!");
     },
     async getTransactionDb({ commit }) {
       await fb.transactions.get();
@@ -254,15 +265,21 @@ const store = new Vuex.Store({
           querySnapshot.forEach((doc) => {
             myTokens.push({
               TokenId: doc.id,
+              createdAt: doc.data().createdAt,
               uid: doc.data().uid,
               amount: doc.data().amount,
+              description: doc.data().description,
+              fromName: doc.data().fromName,
+              fromUid: doc.data().fromUid,
+              liquidated: doc.data().liquidated
+
             });
           });
           commit("setMyTokens", myTokens);
         })
         .catch((error) => {
           console.error("Erro buscando meus tokens: ", error);
-        });      
+        });
     },
   },
 });
