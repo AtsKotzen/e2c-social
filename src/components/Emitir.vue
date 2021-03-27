@@ -1,93 +1,69 @@
 <template>
   <div align="center">
     <br />
-    <h1>Emitir Tokens E2C!!!</h1>
-    <div id="create-e2c">
-      <div>
-        <md-avatar class="md-avatar-icon md-primary">
-          <md-icon></md-icon>
-        </md-avatar>
-        <label class="md-title">{{ userProfile.name }}</label>
-      </div>
-      <br />
-      <div>       
-        <label>Quem Recebe </label>
-        <select v-model="quemRecebe">
-          <option
+    <h3>Emitir Tokens €2₵</h3>
+    
+    <div class="md-layout-item">
+      <md-field>
+        <label>Emitir tokens para...</label>
+        <md-select v-model="quemRecebe">
+          <md-option
             v-for="(u, index) in users"
             :key="index"
             :label="u.name"
             :value="u"
-          ></option>
-        </select>
-      </div>
-      <br />
-      <div>
-        <label>Quantidade </label>
-        <input type="number" v-model.number="amount" placeholder="Quantidade" />
-      </div>
-      <br />
-      <div>
-        <label>Descrição</label>
-        <br />
-        <textarea
-          v-model="descricao"
-          placeholder="Descreva o que o motivou o reconhecimento..."
-          rows="7"
-          cols="40"
-          maxlength="500"
-        ></textarea>
-      </div>
-      <br />
-      <div>
-        <label>A pessoa que recebe pode registrar o desejo de acessar</label>
-        <br />
-        <textarea
-          v-model="desejoAcessar"
-          placeholder="Aproveite para registrar um desejo, algo que o recebedor deseja acessar..."
-          rows="6"
-          cols="40"
-          maxlength="500"
-        ></textarea>
-      </div>
-      <br />
-      <div>
-        <button class="button mb-10" @click="emitirTokens()">
-          Emitir tokens E2C
-        </button>
-      </div>
+            >{{ u.name }}</md-option
+          >
+        </md-select>
+      </md-field>
+    </div>
+
+    <md-field>
+      <label>Quantidade</label>
+      <md-input v-model.number="amount" type="number"></md-input>
+    </md-field>    
+
+    <md-field>
+      <label>Descreva o que motivou o reconhecimento...</label>
+      <md-textarea v-model="descricao"></md-textarea>
+    </md-field>
+    
+    
+    <br />
+    <div>
+      <button class="button mb-10" @click="emitirTokens()">
+        Emitir tokens €2₵
+      </button>
     </div>
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
   name: "Emitir",
   data: function() {
     return {
-      transactions: [], 
-      descricao: "",      
-      quemRecebe: null,  
-      amount: null,
-      desejoAcessar: "",
+      transactions: [],
+      descricao: "",
+      quemRecebe: null,
+      amount: null
     };
   },
   computed: {
-    ...mapState(['userProfile', 'posts']),
+    ...mapState(["userProfile", "posts"]),
     users: function() {
       return this.$store.state.users;
     },
   },
   methods: {
-    emitirTokens() {      
-      let payload = {      
+    emitirTokens() {
+      let payload = {
         toUid: this.quemRecebe.id,
-        toName: this.quemRecebe.name,  
+        toName: this.quemRecebe.name,
         amount: this.amount,
-        description: this.descricao,
-        accessWish: this.desejoAcessar
-      };      
-      this.$store.dispatch("emmitTokensAndTransactionDb", payload);  
+        description: this.descricao
+      };
+      this.$store.dispatch("emmitTokensAndTransactionDb", payload);
     },
   },
 };

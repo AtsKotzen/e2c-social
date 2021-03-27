@@ -9,7 +9,7 @@
         <md-table-head>ID</md-table-head>
         <md-table-head>Tipo</md-table-head>
         <md-table-head>Nome</md-table-head>
-        <md-table-head>Tokens E2C</md-table-head>
+        <md-table-head>Tokens €2₵</md-table-head>
         <md-table-head>Para</md-table-head>
         <md-table-head>Motivo</md-table-head>
       </md-table-row>

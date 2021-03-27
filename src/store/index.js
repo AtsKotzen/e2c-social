@@ -161,7 +161,6 @@ const store = new Vuex.Store({
           fromName: state.userProfile.name,
           toName: payload.toName,
           description: payload.description,
-          accessWish: payload.accessWish,
           type: "emissão",
         })
         .then(
@@ -182,8 +181,7 @@ const store = new Vuex.Store({
     async setLiquidateIntentionDb({ state, commit }, payload) {
       await fb.transactions.add({
         createdAt: new Date(),
-        fromUid: fb.auth.currentUser.uid,
-        toUid: payload.toUid,
+        fromUid: fb.auth.currentUser.uid,  
         fromName: state.userProfile.name,
         toName: payload.toName,
         description: payload.description,
