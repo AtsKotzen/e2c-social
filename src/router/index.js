@@ -36,6 +36,14 @@ const routes = [
     }
   },
   {
+    path: '/painel',
+    name: 'painel',
+    component: () => import( /* webpackChunkName: "settings" */ '../views/Painel.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/wish-list',
     name: 'wish-list',
     component: () => import( /* webpackChunkName: "settings" */ '../views/DesejoAcessar.vue'),

@@ -5,10 +5,13 @@
         <router-link to="/">
           <h3>E2C</h3>
         </router-link>
-        <ul class="inline">          
+        <ul class="inline">
           <li>
-            <router-link to="/transactions">Painel</router-link>
-          </li>          
+            <router-link to="/painel">Painel</router-link>
+          </li>
+          <li>
+            <router-link to="/transactions">Transações</router-link>
+          </li>
           <li>
             <router-link to="/wish-list">Desejo acessar</router-link>
           </li>
@@ -26,16 +29,18 @@
 </template>
 
 <script>
+
 export default {
+  
   methods: {
     logout() {
-      this.$store.dispatch('logout')
-    }
-  }
-}
+      this.$store.dispatch("logout");
+    },
+  },
+};
 </script>
 <style scoped>
-.danger{
+.danger {
   text-decoration-color: red;
 }
 </style>

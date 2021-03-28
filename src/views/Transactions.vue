@@ -1,25 +1,15 @@
 <template>
-  
-    <div class="row">
-      <td><IntentionLiquidation /></td>    
-      <td><Emitir /></td>
-      <td><Liquidar /></td>
-      <MyTokens />
-      <TransactionsTable />
-
-    </div>     
-    
-  
+  <div>
+    <TransactionsTable />
+  </div>
 </template>
 <script>
-import Emitir from "../components/Emitir";
-import Liquidar from "../components/Liquidar";
-import TransactionsTable from '../components/TransactionsTable'
-import IntentionLiquidation from "../components/IntentionLiquidation"
-import MyTokens from "../components/MyTokens"
+
+import TransactionsTable from "../components/TransactionsTable";
+
 export default {
   name: "Transactions",
-  components: { Emitir, Liquidar, TransactionsTable, IntentionLiquidation, MyTokens },
+  components: { TransactionsTable },
   data: function() {
     return {
       totalTokens: 0,
@@ -28,7 +18,7 @@ export default {
   computed: {
     tokenList: function() {
       return this.$store.state.transactions;
-    }
+    },
   },
 };
 </script>
