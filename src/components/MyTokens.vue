@@ -11,22 +11,22 @@
       <md-card-content>
         <p>Você tem {{ myTokenList.length }} emissões reconhecidas</p>
         <md-card class="cartao" v-for="(m, index) in myTokenList" :key="index">
-          <md-card-content>            
+          <card-header class="md-layout md-size-100 ">
+            <td class="md-layout-item md-size-20 notificação">
               <span class="material-icons icone">
                 price_check
-              </span>            
-            <md-list class="md-triple-line">
-              <md-list-item>
-                <div class="md-list-item-text">
+              </span>
+            </td>
+            <td>
+              <div class="md-list-item-text">
                   <span>{{ m.fromName }}</span>
-                  <span>€2₵ {{ m.amount }}</span>
-                  <p>
-                    {{ m.description }}
-                  </p>
+                  <span>€2₵ {{ m.amount }}</span>                  
                 </div>
-              </md-list-item>
-            </md-list>
-          </md-card-content>
+              <p>
+                    {{ m.description }}
+              </p>
+            </td>
+          </card-header>          
         </md-card>
       </md-card-content>
     </md-card>
@@ -46,6 +46,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>
