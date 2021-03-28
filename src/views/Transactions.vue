@@ -1,7 +1,7 @@
 <template>
   
     <div class="row">
-      <td><CardNotifications /></td>    
+      <td><IntentionLiquidation /></td>    
       <td><Emitir /></td>
       <td><Liquidar /></td>
       <MyTokens />
@@ -15,11 +15,11 @@
 import Emitir from "../components/Emitir";
 import Liquidar from "../components/Liquidar";
 import TransactionsTable from '../components/TransactionsTable'
-import CardNotifications from "../components/CardNotification"
+import IntentionLiquidation from "../components/IntentionLiquidation"
 import MyTokens from "../components/MyTokens"
 export default {
   name: "Transactions",
-  components: { Emitir, Liquidar, TransactionsTable, CardNotifications, MyTokens },
+  components: { Emitir, Liquidar, TransactionsTable, IntentionLiquidation, MyTokens },
   data: function() {
     return {
       totalTokens: 0,

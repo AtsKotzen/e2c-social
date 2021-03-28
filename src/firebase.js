@@ -26,6 +26,7 @@ const tokensE2CCollection = db.collection('tokensE2C')
 const commentsCollection = db.collection('comments')
 const likesCollection = db.collection('likes')
 const transactions = db.collection('transactions')
+const allWishes = db.collection('wishesAccess')
 
 
 
@@ -38,5 +39,6 @@ export {
   postsCollection,
   commentsCollection,
   likesCollection,
-  transactions
+  transactions,
+  allWishes
 }

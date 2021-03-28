@@ -58,6 +58,19 @@ fb.usersCollection.orderBy("name", "desc").onSnapshot((snapshot) => {
   store.commit("setUsers", usersArray);
 });
 
+fb.allWishes.onSnapshot((snapshot=>{
+  let wishesArray = [];
+
+  snapshot.forEach((doc) => {
+    let wish = doc.data();
+    wish.id = doc.id;
+
+    wishesArray.push(wish);
+  });
+
+  store.commit("setAllWishes", wishesArray);  
+}))
+
 const store = new Vuex.Store({
   state: {
     userProfile: {},
@@ -66,7 +79,7 @@ const store = new Vuex.Store({
     users: [],
     tokens: [],
     myTokens: [],
-    desejosDeAcesso: [],
+    allWishes: [],
   },
   mutations: {
     setUserProfile(state, val) {
@@ -90,6 +103,9 @@ const store = new Vuex.Store({
     setMyTokens(state, val) {
       state.myTokens = val;
     },
+    setAllWishes(state, val) {
+      state.allWishes = val;
+    }
   },
   actions: {
     async login({ dispatch }, form) {
@@ -192,6 +208,16 @@ const store = new Vuex.Store({
       });
       alert("Um aviso de Intenção de Liquidação será enviado!");
     },
+    async saveWishAccessDb({ state, commit }, payload) {
+      await fb.allWishes.add({
+        createdAt: new Date(),
+        fromUid: fb.auth.currentUser.uid,  
+        fromName: state.userProfile.name,
+        title: payload.title,
+        description: payload.description       
+      });
+      alert("Desejo de acesso registrado");
+    },
     async getTransactionDb({ commit }) {
       await fb.transactions.get();
       const transactions = await fb.transactions.get();
@@ -255,33 +281,7 @@ const store = new Vuex.Store({
           userName: user.name,
         });
       });
-    },
-    // getMyTokens({ commit }) {
-    //   const userId = fb.auth.currentUser.uid;
-    //   const myTokens = [];
-    //   fb.tokensE2CCollection
-    //     .where("uid", "==", userId)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       querySnapshot.forEach((doc) => {
-    //         myTokens.push({
-    //           TokenId: doc.id,
-    //           createdAt: doc.data().createdAt,
-    //           uid: doc.data().uid,
-    //           amount: doc.data().amount,
-    //           description: doc.data().description,
-    //           fromName: doc.data().fromName,
-    //           fromUid: doc.data().fromUid,
-    //           liquidated: doc.data().liquidated
-
-    //         });
-    //       });
-    //       commit("setMyTokens", myTokens);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Erro buscando meus tokens: ", error);
-    //     });
-    // },
+    }    
   },
 });
 

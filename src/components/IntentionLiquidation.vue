@@ -49,7 +49,7 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  name: "CardNotification",
+  name: "IntentionLiquidation",
   computed: {
     ...mapState(["userProfile"]),
     notifications: function() {

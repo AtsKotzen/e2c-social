@@ -67,7 +67,6 @@ export default {
           };
           this.$store.dispatch("emmitTokensAndTransactionDb", payload);
           this.clearFields();
-
         }
         else {
           alert("Faltou preencher algum campo. Tente novamente");

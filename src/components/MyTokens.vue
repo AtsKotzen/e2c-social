@@ -9,13 +9,12 @@
       </md-card-header>
       <br />
       <md-card-content>
+        <p>Você tem {{ myTokenList.length }} emissões reconhecidas</p>
         <md-card class="cartao" v-for="(m, index) in myTokenList" :key="index">
-          <md-card-content>
-            
+          <md-card-content>            
               <span class="material-icons icone">
                 price_check
-              </span>
-            
+              </span>            
             <md-list class="md-triple-line">
               <md-list-item>
                 <div class="md-list-item-text">
@@ -48,21 +47,5 @@ export default {
 };
 </script>
 <style scoped>
-.e2c {
-  color: white;
-}
-.amarelo {
-  background-color: #b2b40f;
-  text-decoration-color: white;
-}
-.cartao {
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-block-end: 30px;
-}
-.icone {
-  font-size: 50px;
-  color: #b2b40f;
-;
-}
+
 </style>
