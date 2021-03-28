@@ -6,6 +6,7 @@
           <p class="e2c">Transações</p>
         </div>
       </md-card-header>
+      <br />
       <md-card-content>
         <md-table md-card>
           <md-table-toolbar>

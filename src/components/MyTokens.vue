@@ -1,42 +1,68 @@
 <template>
-  <div >
-    <md-card class="md-layout-item md-size-75" v-for="(t, index) in myTokenList" :key="index">
-      <md-card-header>
-        <div class="md-layout">
-          <div class="md-layout-item md-size-25">
-            <md-avatar class="md-large">
-              <img
-                src="https://itpetblog.com.br/wp-content/uploads/2019/07/grumpy-cat-1024x681.jpg"
-                alt="Avatar"
-              />
-            </md-avatar>
-          </div>
-
-          <div class="md-layout-item md-size-50">
-            <div class="md-title">
-              {{ t.fromName }}
-            </div>
-            <div class="md-head">Reconheceu: {{ t.amount }} Tokens E2C para você!</div>
-          </div>
+  <div class="md-layout">
+    <br />
+    <md-card class="md-elevation-4">
+      <md-card-header class="md-elevation-6 amarelo">
+        <div class="md-headline">
+          <p class="e2c">Meus Tokens €2₵</p>
         </div>
       </md-card-header>
-
-      <md-card-content class="md-head">        
-        {{ t.description }}
+      <br />
+      <md-card-content>
+        <md-card class="cartao" v-for="(m, index) in myTokenList" :key="index">
+          <md-card-content>
+            
+              <span class="material-icons icone">
+                price_check
+              </span>
+            
+            <md-list class="md-triple-line">
+              <md-list-item>
+                <div class="md-list-item-text">
+                  <span>{{ m.fromName }}</span>
+                  <span>€2₵ {{ m.amount }}</span>
+                  <p>
+                    {{ m.description }}
+                  </p>
+                </div>
+              </md-list-item>
+            </md-list>
+          </md-card-content>
+        </md-card>
       </md-card-content>
     </md-card>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   name: "myTokens",
-  async mounted() {
-    await this.$store.dispatch("getMyTokens");
-  },
   computed: {
+    ...mapState(["userProfile"]),
     myTokenList: function() {
-      return this.$store.state.myTokens;
+      return this.$store.state.tokens.filter(
+        (el) => el.uid == this.userProfile.uid
+      );
     },
   },
 };
 </script>
+<style scoped>
+.e2c {
+  color: white;
+}
+.amarelo {
+  background-color: #b2b40f;
+  text-decoration-color: white;
+}
+.cartao {
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-block-end: 30px;
+}
+.icone {
+  font-size: 50px;
+  color: #b2b40f;
+;
+}
+</style>

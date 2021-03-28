@@ -4,7 +4,7 @@
       <td><CardNotifications /></td>    
       <td><Emitir /></td>
       <td><Liquidar /></td>
-
+      <MyTokens />
       <TransactionsTable />
 
     </div>     
@@ -16,16 +16,14 @@ import Emitir from "../components/Emitir";
 import Liquidar from "../components/Liquidar";
 import TransactionsTable from '../components/TransactionsTable'
 import CardNotifications from "../components/CardNotification"
+import MyTokens from "../components/MyTokens"
 export default {
   name: "Transactions",
-  components: { Emitir, Liquidar, TransactionsTable, CardNotifications },
+  components: { Emitir, Liquidar, TransactionsTable, CardNotifications, MyTokens },
   data: function() {
     return {
       totalTokens: 0,
     };
-  },
-  async mounted() {
-    await this.$store.dispatch("getMyTokens");
   },
   computed: {
     tokenList: function() {

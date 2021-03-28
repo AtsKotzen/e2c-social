@@ -53,7 +53,7 @@ export default {
   computed: {
     ...mapState(["userProfile"]),
     notifications: function() {
-      return this.$store.state.transactions.filter(el=> el.type == "intenção-liquidação").filter(i=> i.toName == this.userProfile.name);
+      return this.$store.state.transactions.filter(el=> el.type == "intenção-liquidação").filter(i=> i.toUid == this.userProfile.uid);
     }
   },
   methods: {

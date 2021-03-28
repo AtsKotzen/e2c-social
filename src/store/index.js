@@ -113,6 +113,7 @@ const store = new Vuex.Store({
       await fb.usersCollection.doc(user.uid).set({
         name: form.name,
         title: form.title,
+        uid: user.uid
       });
 
       // fetch user profile and set in state
@@ -129,6 +130,7 @@ const store = new Vuex.Store({
       if (router.currentRoute.path === "/login") {
         router.push("/transactions");
       }
+      
     },
     async logout({ commit }) {
       // log user out
@@ -254,32 +256,32 @@ const store = new Vuex.Store({
         });
       });
     },
-    getMyTokens({ commit }) {
-      const userId = fb.auth.currentUser.uid;
-      const myTokens = [];
-      fb.tokensE2CCollection
-        .where("uid", "==", userId)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            myTokens.push({
-              TokenId: doc.id,
-              createdAt: doc.data().createdAt,
-              uid: doc.data().uid,
-              amount: doc.data().amount,
-              description: doc.data().description,
-              fromName: doc.data().fromName,
-              fromUid: doc.data().fromUid,
-              liquidated: doc.data().liquidated
+    // getMyTokens({ commit }) {
+    //   const userId = fb.auth.currentUser.uid;
+    //   const myTokens = [];
+    //   fb.tokensE2CCollection
+    //     .where("uid", "==", userId)
+    //     .get()
+    //     .then((querySnapshot) => {
+    //       querySnapshot.forEach((doc) => {
+    //         myTokens.push({
+    //           TokenId: doc.id,
+    //           createdAt: doc.data().createdAt,
+    //           uid: doc.data().uid,
+    //           amount: doc.data().amount,
+    //           description: doc.data().description,
+    //           fromName: doc.data().fromName,
+    //           fromUid: doc.data().fromUid,
+    //           liquidated: doc.data().liquidated
 
-            });
-          });
-          commit("setMyTokens", myTokens);
-        })
-        .catch((error) => {
-          console.error("Erro buscando meus tokens: ", error);
-        });
-    },
+    //         });
+    //       });
+    //       commit("setMyTokens", myTokens);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Erro buscando meus tokens: ", error);
+    //     });
+    // },
   },
 });
 
