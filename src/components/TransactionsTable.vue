@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-card class="md-elevation-8">
+    <md-card class="md-elevation-8 tabela">
       <md-card-header class="md-elevation-10 roxo">
         <div class="md-headline">
           <p class="e2c">Transações</p>
@@ -54,5 +54,9 @@ export default {
 .roxo {
   background-color: #6a61b8;
   text-decoration-color: white;
+}
+.tabela {
+  margin-block-start: 30px;
+  margin-block-end: 90px;
 }
 </style>

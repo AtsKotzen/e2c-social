@@ -1,1 +1,5 @@
 node_modules
+/toDeploy
+/dist
+.firebase
+.firebaserc

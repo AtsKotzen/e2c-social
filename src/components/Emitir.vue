@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cartao">
     <br />
     <md-card class="md-elevation-4">
       <md-card-header class="md-elevation-6 header">
@@ -10,7 +10,7 @@
       <md-card-content>
         <br />
         <div>
-          <label for="users">Selecione um usuário </label>
+          <label>Selecione um usuário </label>
           <select v-model="quemRecebe">
             <option v-for="(u, index) in users" :key="index" :value="u">{{
               u.name
@@ -54,14 +54,30 @@ export default {
   },
   methods: {
     emitirTokens() {
-      let payload = {
-        toUid: this.quemRecebe.id,
-        toName: this.quemRecebe.name,
-        amount: this.amount,
-        description: this.descricao,
-      };
-      this.$store.dispatch("emmitTokensAndTransactionDb", payload);
+      if (
+        this.amount !== null &&
+        this.descricao !== "" &&
+        this.quemRecebe !== null
+      ) {
+        let payload = {
+            toUid: this.quemRecebe.id,
+            toName: this.quemRecebe.name,
+            amount: this.amount,
+            description: this.descricao,
+          };
+          this.$store.dispatch("emmitTokensAndTransactionDb", payload);
+          this.clearFields();
+
+        }
+        else {
+          alert("Faltou preencher algum campo. Tente novamente");
+        }  
     },
+    clearFields() {
+      this.quemRecebe = null;
+      this.descricao = "";
+      this.quemRecebe = null;
+    }
   },
 };
 </script>
@@ -71,5 +87,13 @@ export default {
 }
 .e2c {
   color: white;
+}
+.cartao {
+  margin-right: 50px;
+  margin-left: 50px;
+  margin-block-start: 30px;
+  margin-block-end: 30px;  
+  max-width: 333px;
+  min-width: 350px;
 }
 </style>

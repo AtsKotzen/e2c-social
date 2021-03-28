@@ -1,10 +1,11 @@
 <template>
   <section>
     <div class="row">
-      
-      <Emitir />      
+      <td><Emitir /></td>
+      <td><Liquidar /></td>
+            
      
-      <Liquidar />
+      
 
       <TransactionsTable />
 
