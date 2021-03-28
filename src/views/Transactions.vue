@@ -1,9 +1,13 @@
 <template>
   <section>
     <div class="row">
+      
       <Emitir />      
      
       <Liquidar />
+
+      <TransactionsTable />
+
     </div>     
     
   </section>
@@ -11,10 +15,10 @@
 <script>
 import Emitir from "../components/Emitir";
 import Liquidar from "../components/Liquidar";
-
+import TransactionsTable from '../components/TransactionsTable'
 export default {
   name: "Transactions",
-  components: { Emitir, Liquidar },
+  components: { Emitir, Liquidar, TransactionsTable },
   data: function() {
     return {
       totalTokens: 0,

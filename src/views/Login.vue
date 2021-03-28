@@ -3,13 +3,13 @@
     <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
     <section>
       <div class="col1">
-        <h1>Token E2C</h1>
+        <h1>Token €2₵</h1>
         <p><strong>Seja bem vindo!</strong><br />
         Essa é a nossa plataforma de reconhecimento e liquidação de tokens empáticos!</p>
       </div>
       <div :class="{ 'signup-form': !showLoginForm }" class="col2">
         <form v-if="showLoginForm" @submit.prevent>
-          <h1>Que bom te ver de novo!</h1>
+          <h1>Login</h1>
           <div>
             <label for="email1">Email</label>
             <input v-model.trim="loginForm.email" type="text" placeholder="seu@email.com" id="email1" />

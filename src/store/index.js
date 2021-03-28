@@ -127,7 +127,7 @@ const store = new Vuex.Store({
 
       // change route to dashboard
       if (router.currentRoute.path === "/login") {
-        router.push("/");
+        router.push("/transactions");
       }
     },
     async logout({ commit }) {
@@ -184,6 +184,7 @@ const store = new Vuex.Store({
         fromUid: fb.auth.currentUser.uid,  
         fromName: state.userProfile.name,
         toName: payload.toName,
+        toUid: payload.toUid,
         description: payload.description,
         type: "intenção-liquidação",
       });

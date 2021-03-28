@@ -1,11 +1,10 @@
 <template>
-  <TransactionsTable />
+  <div>Desejo Acessar</div>
 </template>
 <script>
-import TransactionsTable from '../components/TransactionsTable'
+
 export default {
-  name: "DesejoAcessar",
-  components: { TransactionsTable}
+  name: "DesejoAcessar"
 }
 </script>
 <style lang="scss" scoped>

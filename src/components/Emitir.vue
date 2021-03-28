@@ -1,40 +1,37 @@
 <template>
-  <div align="center">
+  <div>
     <br />
-    <h3>Emitir Tokens €2₵</h3>
-    
-    <div class="md-layout-item">
-      <md-field>
-        <label>Emitir tokens para...</label>
-        <md-select v-model="quemRecebe">
-          <md-option
-            v-for="(u, index) in users"
-            :key="index"
-            :label="u.name"
-            :value="u"
-            >{{ u.name }}</md-option
-          >
-        </md-select>
-      </md-field>
-    </div>
+    <md-card class="md-elevation-4">
+      <md-card-header class="md-elevation-6 header">
+        <div class="md-headline">
+          <p class="e2c">Emitir €2₵</p>
+        </div>
+      </md-card-header>
+      <md-card-content>
+        <br />
+        <div>
+          <label for="users">Selecione um usuário </label>
+          <select v-model="quemRecebe">
+            <option v-for="(u, index) in users" :key="index" :value="u">{{
+              u.name
+            }}</option>
+          </select>
+        </div>
+        <md-field>
+          <label>Quantidade</label>
+          <md-input v-model.number="amount" type="number"></md-input>
+        </md-field>
 
-    <md-field>
-      <label>Quantidade</label>
-      <md-input v-model.number="amount" type="number"></md-input>
-    </md-field>    
+        <md-field>
+          <label>Descrição...</label>
+          <md-textarea v-model="descricao"></md-textarea>
+        </md-field>
 
-    <md-field>
-      <label>Descreva o que motivou o reconhecimento...</label>
-      <md-textarea v-model="descricao"></md-textarea>
-    </md-field>
-    
-    
-    <br />
-    <div>
-      <button class="button mb-10" @click="emitirTokens()">
-        Emitir tokens €2₵
-      </button>
-    </div>
+        <button class="button mb-10" @click="emitirTokens()">
+          Emitir tokens €2₵
+        </button>
+      </md-card-content>
+    </md-card>
   </div>
 </template>
 <script>
@@ -46,7 +43,7 @@ export default {
       transactions: [],
       descricao: "",
       quemRecebe: null,
-      amount: null
+      amount: null,
     };
   },
   computed: {
@@ -61,10 +58,18 @@ export default {
         toUid: this.quemRecebe.id,
         toName: this.quemRecebe.name,
         amount: this.amount,
-        description: this.descricao
+        description: this.descricao,
       };
       this.$store.dispatch("emmitTokensAndTransactionDb", payload);
     },
   },
 };
 </script>
+<style scoped>
+.header {
+  background-color: #448aff;
+}
+.e2c {
+  color: white;
+}
+</style>
