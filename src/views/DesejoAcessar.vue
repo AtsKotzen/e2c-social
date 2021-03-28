@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <AddWish />  
-    <WishesTable />
+  <div class="row">      
+    <td><AddWish /></td>
+    <td><WishesTable /></td>    
   </div>
   
 

@@ -68,8 +68,7 @@ export default {
 }
 .cartao {
   margin-right: 50px;
-  margin-left: 50px;
-  margin-block-start: 30px;
+  margin-left: 50px;  
   margin-block-end: 30px;
   max-width: 333px;
   min-width: 350px;
