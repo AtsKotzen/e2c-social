@@ -1,25 +1,24 @@
 <template>
-  <section>
+  
     <div class="row">
+      <td><CardNotifications /></td>    
       <td><Emitir /></td>
       <td><Liquidar /></td>
-            
-     
-      
 
       <TransactionsTable />
 
     </div>     
     
-  </section>
+  
 </template>
 <script>
 import Emitir from "../components/Emitir";
 import Liquidar from "../components/Liquidar";
 import TransactionsTable from '../components/TransactionsTable'
+import CardNotifications from "../components/CardNotification"
 export default {
   name: "Transactions",
-  components: { Emitir, Liquidar, TransactionsTable },
+  components: { Emitir, Liquidar, TransactionsTable, CardNotifications },
   data: function() {
     return {
       totalTokens: 0,

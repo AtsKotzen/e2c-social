@@ -1,10 +1,16 @@
 <template>
-  <div>Desejo Acessar</div>
+  <div>    
+    Desejo Acessar
+  </div>
+  
+
 </template>
 <script>
+//import CardNotification from "../components/CardNotification";
 
 export default {
-  name: "DesejoAcessar"
+  name: "DesejoAcessar",
+ 
 }
 </script>
 <style lang="scss" scoped>
