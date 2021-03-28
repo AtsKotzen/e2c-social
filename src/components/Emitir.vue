@@ -77,6 +77,7 @@ export default {
       this.quemRecebe = null;
       this.descricao = "";
       this.quemRecebe = null;
+      this.amount = null;
     }
   },
 };
