@@ -15,6 +15,9 @@
           <li>
             <router-link to="/wish-list">Desejo acessar</router-link>
           </li>
+          <li>
+            <router-link to="/avaiable">Disponível</router-link>
+          </li>
           <li class="danger">
             <router-link to="/">Reportar Bugs</router-link>
           </li>

@@ -27,6 +27,7 @@ const commentsCollection = db.collection('comments')
 const likesCollection = db.collection('likes')
 const transactions = db.collection('transactions')
 const allWishes = db.collection('wishesAccess')
+const avaiable = db.collection('avaiable')
 
 
 
@@ -40,5 +41,6 @@ export {
   commentsCollection,
   likesCollection,
   transactions,
-  allWishes
+  allWishes,
+  avaiable
 }

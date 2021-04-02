@@ -5,6 +5,7 @@
          
       <Emitir />
       <Liquidar />
+      <Reconhecidos />
 
     </div> 
 </template>
@@ -13,10 +14,11 @@ import Emitir from "../components/Emitir";
 import Liquidar from "../components/Liquidar";
 import IntentionLiquidation from "../components/IntentionLiquidation"
 import MyTokens from "../components/MyTokens"
+import Reconhecidos from "../components/Reconhecidos"
 
 export default {
   name: "Transactions",
-  components: { Emitir, Liquidar, IntentionLiquidation, MyTokens },
+  components: { Emitir, Liquidar, IntentionLiquidation, MyTokens, Reconhecidos },
   data: function() {
     return {
       totalTokens: 0,

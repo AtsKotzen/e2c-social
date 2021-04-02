@@ -4,12 +4,12 @@
     <md-card class="md-elevation-4">
       <md-card-header class="md-elevation-6 amarelo">
         <div class="md-headline">
-          <p class="e2c">Tokens €2₵ Recebidos</p>
+          <p class="e2c">Todos os Tokens €2₵ Reconhecidos</p>
         </div>
       </md-card-header>
       <br />
       <md-card-content>
-        <p>Você tem {{ myTokenList.length }} emissões reconhecidas</p>
+        <p>Existem {{ myTokenList.length }} emissões reconhecidas no total</p>
         <md-card class="cartao" v-for="(m, index) in myTokenList" :key="index">
           <card-header class="md-layout md-size-100 ">
             <td class="md-layout-item md-size-20 notificação">
@@ -19,7 +19,7 @@
             </td>
             <td>
               <div class="md-list-item-text">
-                  <span>{{ m.fromName }}</span>
+                  <span>{{ m.ownerName }}</span>
                   <span>€2₵ {{ m.amount }}</span>                  
                 </div>
               <p>
@@ -35,14 +35,12 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  name: "myTokens",
+  name: "reconhecidos",
   computed: {
     ...mapState(["userProfile"]),
     myTokenList: function() {
-      return this.$store.state.tokens.filter(
-        (el) => el.uid == this.userProfile.uid
-      );
-    },
+      return this.$store.state.tokens;
+    }
   },
 };
 </script>

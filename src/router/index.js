@@ -50,6 +50,14 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/avaiable',
+    name: 'avaiable',
+    component: () => import( /* webpackChunkName: "settings" */ '../views/Avaiable.vue'),
+    meta: {
+      requiresAuth: true
+    }
   } 
 ]
 

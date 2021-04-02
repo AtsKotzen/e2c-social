@@ -69,7 +69,19 @@ fb.allWishes.onSnapshot((snapshot=>{
   });
 
   store.commit("setAllWishes", wishesArray);  
-}))
+}));
+fb.avaiable.onSnapshot((snapshot=>{
+  let avaiableArray = [];
+
+  snapshot.forEach((doc) => {
+    let avaiable = doc.data();
+    avaiable.id = doc.id;
+
+    avaiableArray.push(avaiable);
+  });
+
+  store.commit("setAvaiable", avaiableArray);  
+}));
 
 const store = new Vuex.Store({
   state: {
@@ -80,6 +92,7 @@ const store = new Vuex.Store({
     tokens: [],
     myTokens: [],
     allWishes: [],
+    avaiable: []
   },
   mutations: {
     setUserProfile(state, val) {
@@ -105,6 +118,9 @@ const store = new Vuex.Store({
     },
     setAllWishes(state, val) {
       state.allWishes = val;
+    },
+    setAvaiable(state, val) {
+      state.avaiable = val;
     }
   },
   actions: {
@@ -133,7 +149,7 @@ const store = new Vuex.Store({
       });
 
       // fetch user profile and set in state
-      dispatch("fetchUserProfile", user);
+      await dispatch("fetchUserProfile", user);  
     },
     async fetchUserProfile({ commit }, user) {
       // fetch user profile
@@ -144,7 +160,7 @@ const store = new Vuex.Store({
 
       // change route to dashboard
       if (router.currentRoute.path === "/login") {
-        router.push("/transactions");
+        router.push("/painel");
       }
       
     },
@@ -217,6 +233,16 @@ const store = new Vuex.Store({
         description: payload.description       
       });
       alert("Desejo de acesso registrado");
+    },
+    async saveAvaiableDb({ state, commit }, payload) {
+      await fb.avaiable.add({
+        createdAt: new Date(),
+        fromUid: fb.auth.currentUser.uid,  
+        fromName: state.userProfile.name,
+        title: payload.title,
+        description: payload.description    
+      });
+      alert("Disponivel pra usufruto comum registrado");
     },
     async getTransactionDb({ commit }) {
       await fb.transactions.get();
